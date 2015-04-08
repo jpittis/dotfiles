@@ -17,6 +17,9 @@ Plugin 'tomasr/molokai'
 " syntax checking
 Plugin 'scrooloose/syntastic'
 
+" rainbows
+Plugin 'kien/rainbow_parentheses.vim'
+
 " end Vundle setup
 call vundle#end()
 filetype plugin indent on
@@ -52,3 +55,6 @@ let g:syntastic_check_on_wq = 0
 
 " airline
 set laststatus=2
+
+" rainbows
+au VimEnter * RainbowParenthesesToggle
