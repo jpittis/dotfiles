@@ -17,8 +17,8 @@ Plugin 'tomasr/molokai'
 " syntax checking
 Plugin 'scrooloose/syntastic'
 
-" rainbows
-Plugin 'kien/rainbow_parentheses.vim'
+" go stuff
+Plugin 'fatih/vim-go'
 
 " end Vundle setup
 call vundle#end()
@@ -29,6 +29,36 @@ set number
 syntax on
 set hlsearch
 
+" some of this taken from sferik/dotfiles
+
+" let backspace work on other than just inserted text
+set backspace=indent,eol,start
+
+" Set default encoding to UTF-8.
+set encoding=utf-8 fileencodings=
+
+" cursor flip to matching parens and such
+set showmatch
+
+" Keep 5 lines of context when scrolling
+set scrolloff=5
+
+" Keep 5 lines of context when scrolling
+set scrolloff=5
+
+" Backspace and cursor keys wrap
+set whichwrap+=<,>,h,l
+
+" Turn on wild menu
+set wildmenu
+
+" Path/file expansion in colon-mode.
+set wildmode=longest:full,list:full,list:longest
+set wildchar=<TAB>
+
+" Yes, we have a fast terminal
+set ttyfast
+
 " tab configuration should be language specific
 set tabstop=4
 set shiftwidth=4
@@ -37,13 +67,17 @@ set autoindent
 
 " language specific tabs
 autocmd FileType html       setl sw=2 sts=2 et
+autocmd FileType eruby       setl sw=2 sts=2 et
 autocmd FileType ruby       setl sw=2 sts=2 et
+autocmd FileType ocaml       setl sw=2 sts=2 et
 
 " monokai
 let g:rehash256 = 1
 colorscheme molokai
 
 " default syntax checking
+let g:syntastic_python_python_exec = '/usr/bin/python3' " use python 3
+
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -56,5 +90,10 @@ let g:syntastic_check_on_wq = 0
 " airline
 set laststatus=2
 
-" rainbows
-au VimEnter * RainbowParenthesesToggle
+" Go stuff
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
