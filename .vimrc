@@ -29,6 +29,8 @@ set number
 syntax on
 set hlsearch
 
+:set cursorline
+
 " some of this taken from sferik/dotfiles
 
 " let backspace work on other than just inserted text
@@ -97,3 +99,25 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
+" attempt at fancy numbers
+" toggle relative line numbers with control-n
+"function! NumberToggle()
+"  if(&relativenumber == 1)
+"    set number
+"  else
+"    set relativenumber
+"  endif
+"endfunc
+
+" nnoremap <C-n> :call NumberToggle()<cr>
+
+" use relative in normal and absolute in insert
+"autocmd InsertEnter * :set number
+"autocmd InsertLeave * :set relativenumber
+
+" disable arrow keys
+" inoremap <up> <nop>
+" inoremap <down> <nop>
+" inoremap <left> <nop>
+" inoremap <right> <nop>
