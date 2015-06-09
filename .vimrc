@@ -59,7 +59,11 @@ set wildmode=longest:full,list:full,list:longest
 set wildchar=<TAB>
 
 " Yes, we have a fast terminal
+set synmaxcol=300
 set ttyfast
+set ttyscroll=3
+set lazyredraw
+
 
 " tab configuration should be language specific
 set tabstop=4
@@ -72,6 +76,7 @@ autocmd FileType html       setl sw=2 sts=2 et
 autocmd FileType eruby       setl sw=2 sts=2 et
 autocmd FileType ruby       setl sw=2 sts=2 et
 autocmd FileType ocaml       setl sw=2 sts=2 et
+autocmd FileType sh       setl sw=2 sts=2 et
 
 " monokai
 let g:rehash256 = 1
