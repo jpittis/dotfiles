@@ -4,3 +4,5 @@ parse_git_branch() {
 
 PS1="\u@\h\[\033[32m\]\$(parse_git_branch)\[\033[00m\] \w\n\$ "
 
+alias ls="ls -FG"
+alias sl="ls"
