@@ -29,6 +29,14 @@ set number
 syntax on
 set hlsearch
 
+" ctr-l will turn off highlighting
+nnoremap <C-L> :nohl<CR><C-L>
+
+" insensitive search
+set ignorecase
+set smartcase
+
+" clearer cursor
 :set cursorline
 
 " some of this taken from sferik/dotfiles
@@ -63,7 +71,6 @@ set synmaxcol=300
 set ttyfast
 set ttyscroll=3
 set lazyredraw
-
 
 " tab configuration should be language specific
 set tabstop=4
@@ -104,25 +111,3 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
-" attempt at fancy numbers
-" toggle relative line numbers with control-n
-"function! NumberToggle()
-"  if(&relativenumber == 1)
-"    set number
-"  else
-"    set relativenumber
-"  endif
-"endfunc
-
-" nnoremap <C-n> :call NumberToggle()<cr>
-
-" use relative in normal and absolute in insert
-"autocmd InsertEnter * :set number
-"autocmd InsertLeave * :set relativenumber
-
-" disable arrow keys
-" inoremap <up> <nop>
-" inoremap <down> <nop>
-" inoremap <left> <nop>
-" inoremap <right> <nop>
