@@ -14,6 +14,9 @@ Plugin 'bling/vim-airline'
 " molokai theme
 Plugin 'tomasr/molokai'
 
+" solarized
+Plugin 'altercation/vim-colors-solarized'
+
 " syntax checking
 Plugin 'scrooloose/syntastic'
 
@@ -23,6 +26,9 @@ Plugin 'fatih/vim-go'
 " end Vundle setup
 call vundle#end()
 filetype plugin indent on
+
+" default clipboard
+set clipboard=unnamed
 
 " general configuration
 set number
@@ -35,6 +41,12 @@ nnoremap <C-L> :nohl<CR><C-L>
 " insensitive search
 set ignorecase
 set smartcase
+
+" esc with jk
+inoremap jk <ESC>
+
+" set leader to space
+let mapleader = "\<Space>"
 
 " clearer cursor
 :set cursorline
@@ -84,10 +96,15 @@ autocmd FileType eruby       setl sw=2 sts=2 et
 autocmd FileType ruby       setl sw=2 sts=2 et
 autocmd FileType ocaml       setl sw=2 sts=2 et
 autocmd FileType sh       setl sw=2 sts=2 et
+autocmd FileType yaml       setl sw=2 sts=2 et
 
 " monokai
-let g:rehash256 = 1
-colorscheme molokai
+" let g:rehash256 = 1
+" colorscheme molokai
+
+" solarized
+set background=dark
+colorscheme solarized
 
 " default syntax checking
 let g:syntastic_python_python_exec = '/usr/bin/python3' " use python 3
