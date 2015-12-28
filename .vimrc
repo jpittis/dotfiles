@@ -23,6 +23,13 @@ Plugin 'scrooloose/syntastic'
 " go stuff
 Plugin 'fatih/vim-go'
 
+" elixir stuff
+Plugin 'elixir-lang/vim-elixir'
+
+" clojure stuff
+Plugin 'tpope/vim-fireplace'
+Plugin 'guns/vim-clojure-static'
+
 " end Vundle setup
 call vundle#end()
 filetype plugin indent on
@@ -44,9 +51,6 @@ set smartcase
 
 " esc with jk
 inoremap jk <ESC>
-
-" set leader to space
-let mapleader = "\<Space>"
 
 " clearer cursor
 :set cursorline
@@ -103,6 +107,7 @@ autocmd FileType yaml       setl sw=2 sts=2 et
 " colorscheme molokai
 
 " solarized
+set t_Co=256
 set background=dark
 colorscheme solarized
 
@@ -128,3 +133,22 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
+" OCaml
+au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+" OCaml merlin
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:syntastic_ocaml_checkers = ['merlin']
+" OCaml indent
+set rtp^="/home/jpittis/.opam/4.02.1/share/ocp-indent/vim"
+
+" set leader to ,
+let mapleader = ","
+
+" sort by 1st column priority with ,sp
+:map <leader>sp :%!sort -b -k1,1n -k2,2f<CR>
+" sort by 2nd column category with ,sc
+:map <leader>sc :%!sort -b -k2,2f -k1,1n<CR>
+" set a line to be waiting with high priority with ,sw
+:map <leader>sw :.s/^\d\+/9/<CR>:noh<CR>
