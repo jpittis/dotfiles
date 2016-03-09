@@ -4,7 +4,6 @@
 ;; Setup package manager and configure repositories.
 (require 'package)
 
-;;; Code:
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -35,7 +34,10 @@ Return a list of installed packages or nil for every skipped package."
                            'evil-leader
                            'solarized-theme
                            'flycheck
-                           'autopair)
+                           'autopair
+						   'go-mode
+						   'go-autocomplete
+						   'auto-complete)
 
 ;; Always turn on evil mode with a leader key <3.
 (require 'evil-leader)
@@ -44,8 +46,6 @@ Return a list of installed packages or nil for every skipped package."
 
 (require 'evil)
 (evil-mode t)
-
-;figure out how to disable ~ temp files
 
 ;; No menu bars please!
 (menu-bar-mode -1)
@@ -109,11 +109,32 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Auto indentation.
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Disabe startup screen.
+(setq inhibit-startup-message t)
+
+;; Better tabs.
+(setq-default tab-width 4)
+
+;; Go language.
+(defun my-go-mode-hook ()
+    (setq gofmt-command "goimports")
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (evil-leader/set-key "j" 'godef-jump)
+    (evil-leader/set-key "b" 'pop-tag-mark)
+	(auto-complete-mode 1))
+
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(with-eval-after-load 'go-mode
+   (require 'go-autocomplete))
+
 ;; Keybindings and keybound functions.
 (evil-leader/set-key
   "e" 'open-emacs-init
   "o" 'open-terminal
-  "TAB" 'other-window)
+  "TAB" 'other-window
+  "tb" 'switch-to-previous-buffer
+  "tr" 'split-terminal)
 
 (defun open-emacs-init ()
   (interactive)
@@ -122,3 +143,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun open-terminal ()
   (interactive)
   (shell-command "gnome-terminal"))
+
+(defun split-terminal ()
+  (interactive)
+  (if (one-window-p)
+	  (split-window-right))
+  (other-window 1)
+  (eshell))
+
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
