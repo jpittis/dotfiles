@@ -37,7 +37,9 @@ Return a list of installed packages or nil for every skipped package."
                            'autopair
 						   'go-mode
 						   'go-autocomplete
-						   'auto-complete)
+						   'auto-complete
+						   'rust-mode
+						   'flycheck-rust)
 
 ;; Always turn on evil mode with a leader key <3.
 (require 'evil-leader)
@@ -45,6 +47,7 @@ Return a list of installed packages or nil for every skipped package."
 (evil-leader/set-leader "<SPC>")
 
 (require 'evil)
+(define-key evil-normal-state-map (kbd "G") 'end-of-buffer)
 (evil-mode t)
 
 ;; No menu bars please!
@@ -52,15 +55,14 @@ Return a list of installed packages or nil for every skipped package."
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 
-;; Only load solarized in when windowed.
-(mapc
- (lambda (hook-name)
-   (add-hook hook-name
-	     (lambda ()
-	       (if window-system
-		   (load-theme 'solarized-dark t)))))
- '(after-make-frame-functions
-   after-init-hook))
+;; Default to solarized dark
+(load-theme 'solarized t)
+(defun set-background-mode (frame mode)
+  (set-frame-parameter frame 'background-mode mode)
+  (when (not (display-graphic-p frame))
+    (set-terminal-parameter (frame-terminal frame) 'background-mode mode))
+  (enable-theme 'solarized))
+(set-background-mode nil 'dark)
 
 ;; Smooth scrolling with a margin.
 (setq scroll-conservatively 10)
@@ -128,6 +130,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (with-eval-after-load 'go-mode
    (require 'go-autocomplete))
 
+;; Rust language.
+(add-hook 'rust-mode-hook '(lambda ()
+		  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+
 ;; Keybindings and keybound functions.
 (evil-leader/set-key
   "e" 'open-emacs-init
@@ -149,7 +155,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (if (one-window-p)
 	  (split-window-right))
   (other-window 1)
-  (eshell))
+  (ansi-term "bash"))
 
 (defun switch-to-previous-buffer ()
   (interactive)
