@@ -4,7 +4,6 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'benekastah/neomake'
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'janko-m/vim-test'
-Plug 'ctrlpvim/ctrlp.vim'
 
 call plug#end()
 
@@ -88,6 +87,5 @@ let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
 nmap <leader>t :TestNearest<CR>
 nmap <leader>T :TestFile<CR>
 
-" -------------------- ctrlp ----------------------------
-nnoremap <Leader>o :CtrlP<CR>
-nnoremap <Leader>b :CtrlPBuffer<CR>
+" -------------------- fzf ---------------------------------
+nnoremap <Leader>o :FZF<CR>
