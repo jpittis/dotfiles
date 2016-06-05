@@ -23,7 +23,7 @@
 
 ;; Base packages are the ones I can't use emacs without!
 (defvar base-packages
-  '(evil evil-leader autopair auto-complete flycheck))
+  '(evil evil-leader autopair auto-complete flycheck markdown-mode))
 
 ;; Make sure my packages are installed.
 (require-packages base-packages)
@@ -51,6 +51,9 @@
 ;; Show your line and column numbers.
 (setq line-number-mode t)
 (setq column-number-mode t)
+
+;; Full line cursor.
+(global-hl-line-mode 1)
 
 ;; Better parens!
 (require 'autopair)
@@ -100,6 +103,9 @@
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 (global-set-key [escape] 'evil-exit-emacs-state)
 
+;; Make G behave mostly like normal.
+(define-key evil-normal-state-map (kbd "G") 'end-of-buffer)
+
 ;;; -------------------- Keybindings ------------------------
 
 ;; Leader keybindings.
@@ -108,7 +114,9 @@
   "o" 'open-terminal
   "TAB" 'other-window
   "tb" 'switch-to-previous-buffer
-  "tr" 'split-terminal)
+  "tr" 'split-terminal
+  "tp" 'term-paste
+  "sc" 'slime-compile-and-load-file)
 
 (defun open-emacs-init ()
   (interactive)
@@ -131,7 +139,7 @@
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-;;; ---------- Flycheck -------------------------------------
+;;; -------------------- Flycheck ---------------------------
 (require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
@@ -139,4 +147,16 @@
 (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 
 (global-flycheck-mode t)
+
+;;; -------------------- Lisp -------------------------------
+
+;; Lisp specific packages.
+(defvar lisp-packages
+  '(slime))
+
+(require-packages lisp-packages)
+
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+
 
