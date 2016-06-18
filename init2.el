@@ -64,6 +64,9 @@
 ;; Start autocomplete.
 (ac-config-default)
 
+;; Default to size 2 tabs.
+(setq tab-width 2)
+
 ;;; -------------------- Make Emacs Pretty ------------------
 
 ;; A better font.
