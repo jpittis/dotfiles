@@ -23,7 +23,7 @@
 
 ;; Base packages are the ones I can't use emacs without!
 (defvar base-packages
-  '(evil evil-leader autopair auto-complete flycheck markdown-mode))
+  '(evil evil-leader autopair auto-complete flycheck markdown-mode fzf))
 
 ;; Make sure my packages are installed.
 (require-packages base-packages)
@@ -116,7 +116,13 @@
   "tb" 'switch-to-previous-buffer
   "tr" 'split-terminal
   "tp" 'term-paste
-  "sc" 'slime-compile-and-load-file)
+  "ff" 'fzf
+  "fg" 'fzf-git
+  "fd" 'fzf-directory
+  "sc" 'slime-compile-and-load-file
+  "sp" 'slime-repl-previous-input
+  "se" 'slime-eval-last-expression
+  "sd" 'slime-eval-defun)
 
 (defun open-emacs-init ()
   (interactive)
@@ -158,5 +164,26 @@
 
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
+
+;;; -------------------- Fzf --------------------------------
+
+;; Found this on an fzf issue.
+(defadvice fzf/start (after normalize-fzf-mode-line activate)
+  "Hide the modeline so FZF will render properly."
+  (setq mode-line-format nil))
+
+;; Some hacky code to start fzf from the projects root dir.
+(defun in-project-root-dir (path)
+  (file-directory-p (concat path ".git")))
+  
+(defun fzf-git (&optional path)
+  (interactive)
+  (or path (setq path "./"))
+  (if (in-project-root-dir path)
+      (progn
+      (fzf-directory path) (message path))
+    (let* ((current-dir (file-name-as-directory (file-truename path)))
+	   (parent-dir (concat current-dir "../")))
+      (fzf-git parent-dir))))
 
 
