@@ -2,8 +2,11 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'benekastah/neomake'
-Plug 'frankier/neovim-colors-solarized-truecolor-only'
+" Plug 'frankier/neovim-colors-solarized-truecolor-only'
+Plug 'altercation/vim-colors-solarized'
 Plug 'janko-m/vim-test'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'rhysd/vim-crystal'
 
 call plug#end()
 
@@ -48,9 +51,10 @@ set showmatch
 set scrolloff=5
 
 " Solarized
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 colorscheme solarized
+set t_Co=256
 
 " Natural splitting.
 set splitbelow
